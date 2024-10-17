@@ -149,14 +149,32 @@
         }
     </style>
     <script>
-        // Simple Cart Functionality
-        let cart = [];
+        // Simple Cart Functionality with localStorage
+        function updateCartDisplay() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = cart.reduce((count, item) => count + item.quantity, 0);
+            document.getElementById('cart-count').textContent = cartCount;
+        }
 
         function addToCart(product) {
-            cart.push(product);
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingProduct = cart.find(item => item.name === product.name);
+
+            if (existingProduct) {
+                existingProduct.quantity++;
+            } else {
+                product.quantity = 1; // Add quantity property for new items
+                cart.push(product);
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
             alert(`${product.name} has been added to your cart!`);
             console.log('Current cart:', cart);
+            updateCartDisplay(); // Update cart display
         }
+
+        // Update the cart count on page load
+        window.onload = updateCartDisplay;
     </script>
 </head>
 <body>
@@ -171,7 +189,7 @@
             <a href="shop.html">Shop</a>
             <a href="customorders.html">Custom Orders</a>
             <a href="contactus.html">Contact Us</a>
-            <a href="cart.html">Cart</a>
+            <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
         </nav>
     </header>
 
@@ -220,50 +238,46 @@
             <div class="product-item">
                 <img src="path/to/rug6.jpg" alt="Rug 6">
                 <h3>Medium Rug 240x300 cm</h3>
-                <p class="price">1,400 AED</p>
-                <button class="btn" onclick="addToCart({name: 'Medium Rug 240x300 cm', price: 1400})">Add to Cart</button>
+                <p class="price">1,200 AED</p>
+                <button class="btn" onclick="addToCart({name: 'Medium Rug 240x300 cm', price: 1200})">Add to Cart</button>
             </div>
 
             <!-- Large Rugs -->
             <div class="product-item">
                 <img src="path/to/rug7.jpg" alt="Rug 7">
                 <h3>Large Rug 300x400 cm</h3>
-                <p class="price">1,700 AED</p>
-                <button class="btn" onclick="addToCart({name: 'Large Rug 300x400 cm', price: 1700})">Add to Cart</button>
+                <p class="price">2,000 AED</p>
+                <button class="btn" onclick="addToCart({name: 'Large Rug 300x400 cm', price: 2000})">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="path/to/rug8.jpg" alt="Rug 8">
-                <h3>Large Rug 350x450 cm</h3>
-                <p class="price">2,000 AED</p>
-                <button class="btn" onclick="addToCart({name: 'Large Rug 350x450 cm', price: 2000})">Add to Cart</button>
+                <h3>Large Rug 400x500 cm</h3>
+                <p class="price">3,000 AED</p>
+                <button class="btn" onclick="addToCart({name: 'Large Rug 400x500 cm', price: 3000})">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="path/to/rug9.jpg" alt="Rug 9">
-                <h3>Large Rug 400x500 cm</h3>
-                <p class="price">2,300 AED</p>
-                <button class="btn" onclick="addToCart({name: 'Large Rug 400x500 cm', price: 2300})">Add to Cart</button>
+                <h3>Large Rug 500x600 cm</h3>
+                <p class="price">5,000 AED</p>
+                <button class="btn" onclick="addToCart({name: 'Large Rug 500x600 cm', price: 5000})">Add to Cart</button>
             </div>
         </div>
     </section>
 
     <footer>
         <div class="footer-col">
-            <h3>Contact Us</h3>
-            <p>Email: info@rugworxz.com</p>
-            <p>Phone: +971 123 456 789</p>
+            <h3>About Us</h3>
+            <p>We are a handmade rug company dedicated to providing quality and style.</p>
+        </div>
+        <div class="footer-col">
+            <h3>Customer Service</h3>
+            <p><a href="contactus.html">Contact Us</a></p>
+            <p><a href="faq.html">FAQ</a></p>
         </div>
         <div class="footer-col">
             <h3>Follow Us</h3>
-            <a href="#">Facebook</a>
-            <a href="#">Instagram</a>
-            <a href="#">Twitter</a>
-        </div>
-        <div class="footer-col">
-            <h3>Links</h3>
-            <a href="aboutus.html">About Us</a>
-            <a href="shop.html">Shop</a>
-            <a href="customorders.html">Custom Orders</a>
-            <a href="contactus.html">Contact Us</a>
+            <p><a href="https://instagram.com">Instagram</a></p>
+            <p><a href="https://facebook.com">Facebook</a></p>
         </div>
     </footer>
 
