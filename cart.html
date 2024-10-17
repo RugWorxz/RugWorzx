@@ -110,6 +110,20 @@
         .cart-summary .btn:hover {
             background-color: #0077cc;
         }
+        .upload-section {
+            margin-top: 20px;
+        }
+        .upload-section label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .upload-section input[type="file"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 300px;
+        }
         footer {
             background-color: #00aaff;
             padding: 20px;
@@ -146,38 +160,52 @@
 </section>
 
 <div class="cart-container">
-    <form action="sendOrder.php" method="POST" id="orderForm">
+    <form action="sendOrder.php" method="POST" enctype="multipart/form-data" id="orderForm">
         <table class="cart-table" id="cartTable">
             <thead>
                 <tr>
                     <th>Item</th>
                     <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Total</th>
+                    <th>Price (AED)</th>
+                    <th>Total (AED)</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Handwoven Wool Rug</td>
-                    <td><input type="number" name="quantity1" value="1" min="1" class="quantity-input" data-price="200"></td>
-                    <td>$200.00</td>
-                    <td class="item-total">$200.00</td>
+                    <td>
+                        <button type="button" class="quantity-btn" onclick="changeQuantity(this, -1)">-</button>
+                        <input type="number" name="quantity1" value="1" min="0" class="quantity-input" data-price="200" readonly>
+                        <button type="button" class="quantity-btn" onclick="changeQuantity(this, 1)">+</button>
+                    </td>
+                    <td>AED 200.00</td>
+                    <td class="item-total">AED 200.00</td>
                     <td><a href="#" class="remove-item">Remove</a></td>
                 </tr>
                 <tr>
                     <td>Custom Design Rug</td>
-                    <td><input type="number" name="quantity2" value="2" min="1" class="quantity-input" data-price="150"></td>
-                    <td>$150.00</td>
-                    <td class="item-total">$300.00</td>
+                    <td>
+                        <button type="button" class="quantity-btn" onclick="changeQuantity(this, -1)">-</button>
+                        <input type="number" name="quantity2" value="2" min="0" class="quantity-input" data-price="150" readonly>
+                        <button type="button" class="quantity-btn" onclick="changeQuantity(this, 1)">+</button>
+                    </td>
+                    <td>AED 150.00</td>
+                    <td class="item-total">AED 300.00</td>
                     <td><a href="#" class="remove-item">Remove</a></td>
                 </tr>
             </tbody>
         </table>
+
+        <div class="upload-section">
+            <label for="customImage">Upload a custom image (PNG):</label>
+            <input type="file" id="customImage" name="customImage" accept="image/png" required>
+        </div>
+
         <div class="cart-summary">
-            <p><strong>Subtotal:</strong> $<span id="subtotal">500.00</span></p>
-            <p><strong>Shipping:</strong> $15.00</p>
-            <p><strong>Total:</strong> $<span id="total">515.00</span></p>
+            <p><strong>Subtotal:</strong> AED <span id="subtotal">500.00</span></p>
+            <p><strong>Shipping:</strong> AED 15.00</p>
+            <p><strong>Total:</strong> AED <span id="total">515.00</span></p>
             <button type="submit" class="btn">Proceed to Checkout</button>
         </div>
     </form>
@@ -202,25 +230,47 @@
         input.addEventListener('input', updateTotals);
     });
 
+    function changeQuantity(button, change) {
+        const quantityInput = button.parentElement.querySelector('.quantity-input');
+        let currentValue = parseInt(quantityInput.value);
+        currentValue += change;
+
+        // Prevent going below 0
+        if (currentValue < 0) {
+            currentValue = 0;
+        }
+
+        quantityInput.value = currentValue;
+        updateItemTotal(button);
+        updateTotals();
+    }
+
+    function updateItemTotal(button) {
+        const row = button.closest('tr');
+        const quantity = row.querySelector('.quantity-input').value;
+        const price = row.querySelector('.quantity-input').dataset.price;
+        const total = quantity * price;
+        row.querySelector('.item-total').textContent = `AED ${total.toFixed(2)}`;
+    }
+
     function updateTotals() {
         let subtotal = 0;
         document.querySelectorAll('.cart-table tbody tr').forEach(row => {
             const quantity = row.querySelector('.quantity-input').value;
             const price = row.querySelector('.quantity-input').dataset.price;
-            const total = quantity * price;
-            row.querySelector('.item-total').textContent = `$${total.toFixed(2)}`;
-            subtotal += total;
+            subtotal += quantity * price;
         });
 
         subtotalElement.textContent = subtotal.toFixed(2);
-        totalElement.textContent = (subtotal + shippingCost).toFixed(2);
+        const total = subtotal + shippingCost;
+        totalElement.textContent = total.toFixed(2);
     }
 
-    // Remove item from cart
-    document.querySelectorAll('.remove-item').forEach(button => {
-        button.addEventListener('click', (event) => {
+    // Remove item functionality
+    document.querySelectorAll('.remove-item').forEach(link => {
+        link.addEventListener('click', function (event) {
             event.preventDefault();
-            const row = button.closest('tr');
+            const row = this.closest('tr');
             row.remove();
             updateTotals();
         });
