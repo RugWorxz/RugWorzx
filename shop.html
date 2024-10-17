@@ -12,7 +12,10 @@
             background-color: #f0f8ff;
             color: #333;
             line-height: 1.6;
+            scroll-behavior: smooth;
         }
+
+        /* Add transition for smoother color change and box shadow */
         header {
             background-color: white;
             padding: 20px;
@@ -23,9 +26,11 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             transition: background-color 0.3s ease-in-out;
         }
+
         header:hover {
             background-color: #e6f7ff;
         }
+
         .logo h2 {
             color: #00aaff;
             margin: 0;
@@ -34,9 +39,11 @@
             letter-spacing: 1px;
             transition: color 0.3s ease-in-out;
         }
+
         .logo h2:hover {
             color: #0077cc;
         }
+
         nav a {
             margin: 0 15px;
             color: #00aaff;
@@ -44,73 +51,47 @@
             font-weight: bold;
             transition: color 0.3s ease-in-out;
         }
+
         nav a:hover {
             color: #0077cc;
             text-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
+
         .hero {
             text-align: center;
             padding: 100px 20px;
-            background-color: #e6f7ff;
-            color: #333;
+            background: linear-gradient(135deg, #00aaff, #0077cc);
+            color: white;
             position: relative;
             overflow: hidden;
         }
+
         .hero h1 {
             font-size: 48px;
             margin-bottom: 20px;
-            color: #0077cc;
+            color: white;
             transform: translateY(-50px);
             opacity: 0;
             animation: fadeInUp 1s forwards;
         }
+
         .hero p {
             font-size: 20px;
             margin-bottom: 30px;
-            color: #555;
+            color: white;
             transform: translateY(-30px);
             opacity: 0;
             animation: fadeInUp 1s 0.5s forwards;
         }
-        .section {
-            padding: 60px 20px;
-            text-align: center;
-            background-color: white;
-            color: #333;
-        }
-        .section:nth-of-type(even) {
-            background-color: #f0f8ff;
-        }
-        .section h2 {
-            font-size: 36px;
-            margin-bottom: 30px;
-            color: #0077cc;
-        }
-        .section p {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: #555;
-        }
-        .section .btn {
-            background-color: #00aaff;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 30px;
-            font-size: 18px;
-            transition: background-color 0.3s ease-in-out;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        .section .btn:hover {
-            background-color: #0077cc;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-        }
+
+        /* Enhance product item with smooth hover effect */
         .product-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
         }
+
         .product-item {
             background-color: white;
             border: 1px solid #ddd;
@@ -120,41 +101,57 @@
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
             width: 250px;
             text-align: center;
+            position: relative;
+            z-index: 0;
         }
+
         .product-item img {
             width: 100%;
             height: auto;
+            transition: transform 0.5s ease;
         }
+
+        .product-item:hover img {
+            transform: scale(1.1);
+        }
+
         .product-item h3 {
             font-size: 20px;
             color: #0077cc;
             margin: 10px 0;
         }
+
         .product-item p {
             font-size: 16px;
             color: #555;
             margin: 0 10px 10px;
         }
+
+        /* Smoother hover effect with box-shadow and scale */
         .product-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
+
         footer {
             background-color: #00aaff;
             padding: 20px;
             text-align: center;
             color: white;
         }
+
         footer p {
             margin: 0;
             font-size: 14px;
         }
+
         footer a {
             color: white;
             text-decoration: none;
             margin: 0 10px;
             transition: color 0.3s ease-in-out;
         }
+
         footer a:hover {
             color: #e6f7ff;
         }
@@ -169,6 +166,12 @@
                 transform: translateY(0);
             }
         }
+
+        /* Added smooth scroll effect */
+        html {
+            scroll-behavior: smooth;
+        }
+
     </style>
 </head>
 <body>
@@ -212,7 +215,6 @@
                 <h3>Cozy Wool Rug</h3>
                 <p>$249.99</p>
             </div>
-            <!-- Add more products as needed -->
         </div>
     </section>
 
