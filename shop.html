@@ -148,6 +148,16 @@
             margin: 5px 0;
         }
     </style>
+    <script>
+        // Simple Cart Functionality
+        let cart = [];
+
+        function addToCart(product) {
+            cart.push(product);
+            alert(`${product.name} has been added to your cart!`);
+            console.log('Current cart:', cart);
+        }
+    </script>
 </head>
 <body>
 
@@ -174,37 +184,86 @@
         <h2>Our Rugs</h2>
         <p>Explore our wide range of beautifully crafted rugs.</p>
         <div class="product-grid">
-            <!-- Example Product Items -->
+            <!-- Small Rugs -->
             <div class="product-item">
                 <img src="path/to/rug1.jpg" alt="Rug 1">
-                <h3>Classic Persian Rug</h3>
-                <p class="price">$299.99</p>
-                <a href="#" class="btn">View Details</a>
+                <h3>Small Rug 120x120 cm</h3>
+                <p class="price">200 AED</p>
+                <button class="btn" onclick="addToCart({name: 'Small Rug 120x120 cm', price: 200})">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="path/to/rug2.jpg" alt="Rug 2">
-                <h3>Modern Geometric Rug</h3>
-                <p class="price">$179.99</p>
-                <a href="#" class="btn">View Details</a>
+                <h3>Small Rug 150x150 cm</h3>
+                <p class="price">300 AED</p>
+                <button class="btn" onclick="addToCart({name: 'Small Rug 150x150 cm', price: 300})">Add to Cart</button>
             </div>
             <div class="product-item">
                 <img src="path/to/rug3.jpg" alt="Rug 3">
-                <h3>Cozy Wool Rug</h3>
-                <p class="price">$249.99</p>
-                <a href="#" class="btn">View Details</a>
+                <h3>Small Rug 180x180 cm</h3>
+                <p class="price">400 AED</p>
+                <button class="btn" onclick="addToCart({name: 'Small Rug 180x180 cm', price: 400})">Add to Cart</button>
             </div>
-            <!-- Add more products as needed -->
+
+            <!-- Medium Rugs -->
+            <div class="product-item">
+                <img src="path/to/rug4.jpg" alt="Rug 4">
+                <h3>Medium Rug 180x240 cm</h3>
+                <p class="price">600 AED</p>
+                <button class="btn" onclick="addToCart({name: 'Medium Rug 180x240 cm', price: 600})">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="path/to/rug5.jpg" alt="Rug 5">
+                <h3>Medium Rug 210x270 cm</h3>
+                <p class="price">1,000 AED</p>
+                <button class="btn" onclick="addToCart({name: 'Medium Rug 210x270 cm', price: 1000})">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="path/to/rug6.jpg" alt="Rug 6">
+                <h3>Medium Rug 240x300 cm</h3>
+                <p class="price">1,400 AED</p>
+                <button class="btn" onclick="addToCart({name: 'Medium Rug 240x300 cm', price: 1400})">Add to Cart</button>
+            </div>
+
+            <!-- Large Rugs -->
+            <div class="product-item">
+                <img src="path/to/rug7.jpg" alt="Rug 7">
+                <h3>Large Rug 300x400 cm</h3>
+                <p class="price">1,700 AED</p>
+                <button class="btn" onclick="addToCart({name: 'Large Rug 300x400 cm', price: 1700})">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="path/to/rug8.jpg" alt="Rug 8">
+                <h3>Large Rug 350x450 cm</h3>
+                <p class="price">2,000 AED</p>
+                <button class="btn" onclick="addToCart({name: 'Large Rug 350x450 cm', price: 2000})">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="path/to/rug9.jpg" alt="Rug 9">
+                <h3>Large Rug 400x500 cm</h3>
+                <p class="price">2,300 AED</p>
+                <button class="btn" onclick="addToCart({name: 'Large Rug 400x500 cm', price: 2300})">Add to Cart</button>
+            </div>
         </div>
     </section>
 
     <footer>
         <div class="footer-col">
-            <p>&copy; 2024 Rug Worxz</p>
+            <h3>Contact Us</h3>
+            <p>Email: info@rugworxz.com</p>
+            <p>Phone: +971 123 456 789</p>
         </div>
         <div class="footer-col">
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms & Conditions</a>
-            <a href="returns.html">Returns & Exchanges</a>
+            <h3>Follow Us</h3>
+            <a href="#">Facebook</a>
+            <a href="#">Instagram</a>
+            <a href="#">Twitter</a>
+        </div>
+        <div class="footer-col">
+            <h3>Links</h3>
+            <a href="aboutus.html">About Us</a>
+            <a href="shop.html">Shop</a>
+            <a href="customorders.html">Custom Orders</a>
+            <a href="contactus.html">Contact Us</a>
         </div>
     </footer>
 
