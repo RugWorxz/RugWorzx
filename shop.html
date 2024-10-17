@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rug Worxz - Shop</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background-color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #00aaff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease-in-out;
+        }
+        header:hover {
+            background-color: #e6f7ff;
+        }
+        .logo h2 {
+            color: #00aaff;
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: color 0.3s ease-in-out;
+        }
+        .logo h2:hover {
+            color: #0077cc;
+        }
+        nav a {
+            margin: 0 15px;
+            color: #00aaff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease-in-out;
+        }
+        nav a:hover {
+            color: #0077cc;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            background-color: #e6f7ff;
+            color: #333;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #0077cc;
+            transform: translateY(-50px);
+            opacity: 0;
+            animation: fadeInUp 1s forwards;
+        }
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            color: #555;
+            transform: translateY(-30px);
+            opacity: 0;
+            animation: fadeInUp 1s 0.5s forwards;
+        }
+        .section {
+            padding: 60px 20px;
+            text-align: center;
+            background-color: white;
+            color: #333;
+        }
+        .section:nth-of-type(even) {
+            background-color: #f0f8ff;
+        }
+        .section h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #0077cc;
+        }
+        .section p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        .section .btn {
+            background-color: #00aaff;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 18px;
+            transition: background-color 0.3s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .section .btn:hover {
+            background-color: #0077cc;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        .product-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .product-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            width: 250px;
+            text-align: center;
+        }
+        .product-item img {
+            width: 100%;
+            height: auto;
+        }
+        .product-item h3 {
+            font-size: 20px;
+            color: #0077cc;
+            margin: 10px 0;
+        }
+        .product-item p {
+            font-size: 16px;
+            color: #555;
+            margin: 0 10px 10px;
+        }
+        .product-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        footer {
+            background-color: #00aaff;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease-in-out;
+        }
+        footer a:hover {
+            color: #e6f7ff;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <h2>Rug Worxz</h2>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="aboutus.html">About Us</a>
+            <a href="shop.html">Shop</a>
+            <a href="customorders.html">Custom Orders</a>
+            <a href="contactus.html">Contact Us</a>
+            <a href="cart.html">Cart</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Shop Our Collection</h1>
+        <p>Discover Handmade Rugs for Every Style</p>
+    </section>
+
+    <section class="section">
+        <h2>Our Rugs</h2>
+        <p>Explore our wide range of beautifully crafted rugs.</p>
+        <div class="product-grid">
+            <!-- Example Product Items -->
+            <div class="product-item">
+                <img src="path/to/rug1.jpg" alt="Rug 1">
+                <h3>Classic Persian Rug</h3>
+                <p>$299.99</p>
+            </div>
+            <div class="product-item">
+                <img src="path/to/rug2.jpg" alt="Rug 2">
+                <h3>Modern Geometric Rug</h3>
+                <p>$179.99</p>
+            </div>
+            <div class="product-item">
+                <img src="path/to/rug3.jpg" alt="Rug 3">
+                <h3>Cozy Wool Rug</h3>
+                <p>$249.99</p>
+            </div>
+            <!-- Add more products as needed -->
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Rug Worxz</p>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms & Conditions</a>
+        <a href="returns.html">Returns & Exchanges</a>
+    </footer>
+
+</body>
+</html>
