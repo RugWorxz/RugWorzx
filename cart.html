@@ -205,10 +205,10 @@
     function updateLocalStorage() {
         const updatedCart = [];
         document.querySelectorAll('.quantity-input').forEach(input => {
-            const name = input.closest('tr').children[0].innerText.split('\n')[1].trim(); // Extract name from the cell
+            const name = input.closest('tr').querySelector('td:nth-child(1)').innerText.trim(); // Adjusted for text extraction
             const quantity = parseInt(input.value);
             const price = parseFloat(input.dataset.price);
-            const image = input.closest('tr').children[0].querySelector('img').src; // Get the image URL
+            const image = input.closest('tr').querySelector('img').src; // Get the image URL
             if (quantity > 0) {
                 updatedCart.push({ name: name, quantity: quantity, price: price, image: image });
             }
