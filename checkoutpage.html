@@ -1,3 +1,39 @@
+<?php
+session_start();
+
+// Check if the cart is empty
+if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+    header('Location: cart.php'); // Redirect to cart if empty
+    exit;
+}
+
+// Calculate subtotal and shipping cost
+$subtotal = 0;
+$shippingCost = 15.00;
+$cartItems = $_SESSION['cart'];
+
+foreach ($cartItems as $item) {
+    $subtotal += $item['price'] * $item['quantity'];
+}
+
+$total = $subtotal + $shippingCost;
+
+// Process the order on form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $fullName = $_POST['fullName'];
+    $address = $_POST['address'];
+    $city = $_POST['city'];
+    $postalCode = $_POST['postalCode'];
+
+    // Here you would typically save the order details to a database or send an email
+
+    // Clear the cart after checkout
+    unset($_SESSION['cart']);
+    echo "<script>alert('Thank you for your order, $fullName! Your order has been processed.'); window.location.href = 'index.php';</script>";
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +41,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rug Worxz - Checkout</title>
     <style>
+        /* CSS styles (same as before) */
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -88,6 +125,7 @@
             border-radius: 30px;
             font-size: 18px;
             transition: background-color 0.3s ease-in-out;
+            border: none;
         }
         .checkout-summary .btn:hover {
             background-color: #0077cc;
@@ -128,12 +166,12 @@
         <h2>Rug Worxz</h2>
     </div>
     <nav>
-        <a href="index.html">Home</a>
-        <a href="aboutus.html">About Us</a>
-        <a href="shop.html">Shop</a>
-        <a href="customorders.html">Custom Orders</a>
-        <a href="contactus.html">Contact Us</a>
-        <a href="cart.html">Cart</a>
+        <a href="index.php">Home</a>
+        <a href="aboutus.php">About Us</a>
+        <a href="shop.php">Shop</a>
+        <a href="customorders.php">Custom Orders</a>
+        <a href="contactus.php">Contact Us</a>
+        <a href="cart.php">Cart</a>
     </nav>
 </header>
 
@@ -143,7 +181,7 @@
 </section>
 
 <div class="checkout-container">
-    <table class="checkout-table" id="checkoutTable">
+    <table class="checkout-table">
         <thead>
             <tr>
                 <th>Item</th>
@@ -152,90 +190,50 @@
                 <th>Total (AED)</th>
             </tr>
         </thead>
-        <tbody id="checkoutBody">
-            <!-- Checkout items will be populated here -->
+        <tbody>
+            <?php foreach ($cartItems as $item): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($item['name']); ?></td>
+                <td><?php echo htmlspecialchars($item['quantity']); ?></td>
+                <td>AED <?php echo number_format($item['price'], 2); ?></td>
+                <td>AED <?php echo number_format($item['price'] * $item['quantity'], 2); ?></td>
+            </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
 
     <div class="shipping-info">
         <h3>Shipping Information</h3>
-        <label for="fullName">Full Name:</label>
-        <input type="text" id="fullName" name="fullName" required>
+        <form method="POST" action="">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" required>
 
-        <label for="address">Address:</label>
-        <input type="text" id="address" name="address" required>
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" required>
 
-        <label for="city">City:</label>
-        <input type="text" id="city" name="city" required>
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required>
 
-        <label for="postalCode">Postal Code:</label>
-        <input type="text" id="postalCode" name="postalCode" required>
+            <label for="postalCode">Postal Code:</label>
+            <input type="text" id="postalCode" name="postalCode" required>
+            <button type="submit" class="btn">Complete Order</button>
+        </form>
     </div>
 
     <div class="checkout-summary">
-        <p><strong>Subtotal:</strong> AED <span id="checkoutSubtotal">0.00</span></p>
-        <p><strong>Shipping:</strong> AED 15.00</p>
-        <p><strong>Total:</strong> AED <span id="checkoutTotal">15.00</span></p>
-        <button type="button" class="btn" onclick="processCheckout()">Complete Order</button>
+        <p><strong>Subtotal:</strong> AED <?php echo number_format($subtotal, 2); ?></p>
+        <p><strong>Shipping:</strong> AED <?php echo number_format($shippingCost, 2); ?></p>
+        <p><strong>Total:</strong> AED <?php echo number_format($total, 2); ?></p>
     </div>
 </div>
 
 <footer>
     <p>&copy; 2024 Rug Worxz</p>
-    <a href="privacy.html">Privacy Policy</a>
-    <a href="terms.html">Terms & Conditions</a>
-    <a href="returns.html">Returns & Exchanges</a>
+    <a href="privacy.php">Privacy Policy</a>
+    <a href="terms.php">Terms & Conditions</a>
+    <a href="returns.php">Returns & Exchanges</a>
     <a href="mailto:rugworxz@gmail.com">Contact Us</a>
 </footer>
-
-<script>
-    const shippingCost = 15;
-    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-
-    // Initialize the checkout page
-    function initCheckout() {
-        const checkoutBody = document.getElementById('checkoutBody');
-        checkoutBody.innerHTML = ''; // Clear any existing items
-        let subtotal = 0;
-
-        cartItems.forEach((item) => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${item.name}</td>
-                <td>${item.quantity}</td>
-                <td>AED ${item.price.toFixed(2)}</td>
-                <td>AED ${(item.quantity * item.price).toFixed(2)}</td>
-            `;
-            checkoutBody.appendChild(row);
-            subtotal += item.quantity * item.price;
-        });
-
-        document.getElementById('checkoutSubtotal').textContent = subtotal.toFixed(2);
-        document.getElementById('checkoutTotal').textContent = (subtotal + shippingCost).toFixed(2);
-    }
-
-    function processCheckout() {
-        // Add form validation here if needed
-        const fullName = document.getElementById('fullName').value;
-        const address = document.getElementById('address').value;
-        const city = document.getElementById('city').value;
-        const postalCode = document.getElementById('postalCode').value;
-
-        if (fullName && address && city && postalCode) {
-            alert('Thank you for your order, ' + fullName + '! Your order has been processed.');
-            // Here you would typically send the order details to your server
-
-            // Clear the cart after checkout
-            localStorage.removeItem('cartItems');
-            window.location.href = 'index.html'; // Redirect to the homepage or another page
-        } else {
-            alert('Please fill in all required fields.');
-        }
-    }
-
-    // Call initCheckout to populate the checkout page on load
-    initCheckout();
-</script>
 
 </body>
 </html>
