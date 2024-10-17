@@ -5,71 +5,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rug Worxz - Cart</title>
     <style>
-        /* Your existing styles remain unchanged */
-        /* Add basic styles for visibility */
         body {
-            font-family: Arial, sans-serif;
+            background-color: #f0f8ff; /* Light blue background */
+            color: #000; /* Black text color for contrast */
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f8f8;
+            transition: background-color 0.3s ease;
         }
         header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 20px;
+            background-color: #ffffff; /* White header */
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        header:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        header .logo h2 {
+            color: #008080; /* Darker blue for the logo */
+            transition: color 0.3s ease;
         }
         nav a {
-            color: #fff;
+            color: #008080; /* Darker blue for links */
             margin: 0 15px;
             text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #005757; /* Darker shade on hover */
+            text-decoration: underline;
         }
         .hero {
             text-align: center;
-            padding: 20px;
-            background-color: #eaeaea;
+            margin: 20px 0;
+            color: #008080; /* Darker blue for hero text */
         }
         .cart-container {
-            margin: 20px;
-            background: #fff;
+            margin: 20px auto;
+            width: 80%;
+            background-color: #ffffff; /* White background for cart */
             padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            transition: box-shadow 0.3s ease;
+        }
+        .cart-container:hover {
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
         .cart-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            transition: transform 0.3s ease;
         }
         .cart-table th, .cart-table td {
-            border: 1px solid #ddd;
-            padding: 10px;
+            padding: 15px;
+            border: 1px solid #ccc;
             text-align: left;
+            transition: background-color 0.3s ease;
         }
-        .quantity-btn {
-            cursor: pointer;
-            padding: 5px 10px;
+        .cart-table th {
+            background-color: #e0f7fa; /* Light blue header */
         }
-        .upload-section {
-            margin-top: 20px;
+        .cart-table tr:hover {
+            background-color: #f1f1f1; /* Light grey on hover */
+        }
+        .cart-summary {
+            background-color: #f0f8ff; /* Light blue for summary */
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
         }
         .btn {
-            background-color: #333;
+            background-color: #008080; /* Darker blue for buttons */
             color: white;
-            border: none;
             padding: 10px 15px;
+            border: none;
             cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .btn:hover {
+            background-color: #006666; /* Darker shade on hover */
+            transform: scale(1.05); /* Slightly enlarge button */
         }
         footer {
             text-align: center;
             padding: 20px;
-            background-color: #333;
-            color: #fff;
-            position: relative;
-            bottom: 0;
-            width: 100%;
+            background-color: #ffffff; /* White footer */
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        footer a {
+            color: #008080; /* Darker blue for footer links */
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            color: #005757; /* Darker shade on hover */
+        }
+        .upload-section {
+            margin: 20px 0;
+        }
+        input[type="file"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+        }
+        input[type="file"]:hover {
+            border-color: #008080; /* Change border color on hover */
         }
     </style>
 </head>
@@ -139,7 +189,7 @@
 
         <div class="cart-summary">
             <p><strong>Subtotal:</strong> AED <span id="subtotal">500.00</span></p>
-            <p><strong>Shipping:</strong> AED <span id="shippingCost">15.00</span></p>
+            <p><strong>Shipping:</strong> AED 15.00</p>
             <p><strong>Total:</strong> AED <span id="total">515.00</span></p>
             <button type="submit" class="btn">Proceed to Checkout</button>
         </div>
@@ -180,27 +230,28 @@
 
     function updateItemTotal(button) {
         const row = button.closest('tr');
-        const quantity = row.querySelector('.quantity-input').value;
-        const price = row.querySelector('.quantity-input').dataset.price;
-        const total = quantity * price;
-        row.querySelector('.item-total').textContent = `AED ${total.toFixed(2)}`;
+        const price = parseFloat(row.querySelector('td:nth-child(3)').innerText.replace('AED ', ''));
+        const quantity = parseInt(row.querySelector('.quantity-input').value);
+        const itemTotal = row.querySelector('.item-total');
+
+        itemTotal.innerText = 'AED ' + (price * quantity).toFixed(2);
     }
 
     function updateTotals() {
         let subtotal = 0;
-        document.querySelectorAll('.cart-table tbody tr').forEach(row => {
-            const quantity = row.querySelector('.quantity-input').value;
-            const price = row.querySelector('.quantity-input').dataset.price;
-            subtotal += quantity * price;
+
+        quantityInputs.forEach(input => {
+            const price = parseFloat(input.dataset.price);
+            const quantity = parseInt(input.value);
+            subtotal += price * quantity;
         });
 
-        subtotalElement.textContent = subtotal.toFixed(2);
-        const total = subtotal + shippingCost;
-        totalElement.textContent = total.toFixed(2);
+        subtotalElement.innerText = subtotal.toFixed(2);
+        totalElement.innerText = (subtotal + shippingCost).toFixed(2);
     }
 
     document.querySelectorAll('.remove-item').forEach(link => {
-        link.addEventListener('click', function (event) {
+        link.addEventListener('click', function(event) {
             event.preventDefault();
             const row = this.closest('tr');
             row.remove();
@@ -208,6 +259,5 @@
         });
     });
 </script>
-
 </body>
 </html>
