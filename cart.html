@@ -6,120 +6,67 @@
     <title>Rug Worxz - Cart</title>
     <style>
         body {
-            background-color: #f0f8ff; /* Light blue background */
-            color: #000; /* Black text color for contrast */
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            transition: background-color 0.3s ease;
+            background-color: #f8f9fa;
         }
         header {
-            background-color: #ffffff; /* White header */
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease;
-        }
-        header:hover {
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-        header .logo h2 {
-            color: #008080; /* Darker blue for the logo */
-            transition: color 0.3s ease;
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            text-align: center;
         }
         nav a {
-            color: #008080; /* Darker blue for links */
-            margin: 0 15px;
+            color: white;
+            margin: 0 10px;
             text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        nav a:hover {
-            color: #005757; /* Darker shade on hover */
-            text-decoration: underline;
-        }
-        .hero {
-            text-align: center;
-            margin: 20px 0;
-            color: #008080; /* Darker blue for hero text */
         }
         .cart-container {
             margin: 20px auto;
-            width: 80%;
-            background-color: #e0f7fa; /* Light blue background for cart */
+            max-width: 800px;
+            background-color: white;
             padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            transition: box-shadow 0.3s ease;
-        }
-        .cart-container:hover {
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         .cart-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
-            transition: transform 0.3s ease;
         }
         .cart-table th, .cart-table td {
-            padding: 15px;
-            border: 1px solid #ccc;
+            border: 1px solid #ddd;
+            padding: 10px;
             text-align: left;
-            transition: background-color 0.3s ease;
         }
         .cart-table th {
-            background-color: #b2ebf2; /* Lighter blue header */
-        }
-        .cart-table tr:hover {
-            background-color: #f1f1f1; /* Light grey on hover */
+            background-color: #007BFF;
+            color: white;
         }
         .cart-summary {
-            background-color: #e0f7fa; /* Light blue for summary */
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            font-weight: bold;
         }
         .btn {
-            background-color: #008080; /* Darker blue for buttons */
+            background-color: #007BFF;
             color: white;
-            padding: 10px 15px;
             border: none;
+            padding: 10px;
             cursor: pointer;
             border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: background-color 0.3s;
         }
         .btn:hover {
-            background-color: #006666; /* Darker shade on hover */
-            transform: scale(1.05); /* Slightly enlarge button */
+            background-color: #0056b3;
         }
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #ffffff; /* White footer */
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease;
+        .quantity-btn {
+            cursor: pointer;
+            margin: 0 5px;
         }
-        footer a {
-            color: #008080; /* Darker blue for footer links */
-            margin: 0 10px;
-            transition: color 0.3s ease;
-        }
-        footer a:hover {
-            color: #005757; /* Darker shade on hover */
-        }
-        .upload-section {
-            margin: 20px 0;
-        }
-        input[type="file"] {
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            transition: border-color 0.3s ease;
-        }
-        input[type="file"]:hover {
-            border-color: #008080; /* Change border color on hover */
+        .item-image {
+            width: 50px;
+            height: auto;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -156,41 +103,15 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>Handwoven Wool Rug</td>
-                    <td>
-                        <button type="button" class="quantity-btn" onclick="changeQuantity(this, -1)">-</button>
-                        <input type="number" name="quantity1" value="1" min="0" class="quantity-input" data-price="200" readonly>
-                        <button type="button" class="quantity-btn" onclick="changeQuantity(this, 1)">+</button>
-                    </td>
-                    <td>AED 200.00</td>
-                    <td class="item-total">AED 200.00</td>
-                    <td><a href="#" class="remove-item">Remove</a></td>
-                </tr>
-                <tr>
-                    <td>Custom Design Rug</td>
-                    <td>
-                        <button type="button" class="quantity-btn" onclick="changeQuantity(this, -1)">-</button>
-                        <input type="number" name="quantity2" value="2" min="0" class="quantity-input" data-price="150" readonly>
-                        <button type="button" class="quantity-btn" onclick="changeQuantity(this, 1)">+</button>
-                    </td>
-                    <td>AED 150.00</td>
-                    <td class="item-total">AED 300.00</td>
-                    <td><a href="#" class="remove-item">Remove</a></td>
-                </tr>
+            <tbody id="cartItems">
+                <!-- Cart items will be dynamically populated here -->
             </tbody>
         </table>
 
-        <div class="upload-section">
-            <label for="customImage">Upload a custom image (PNG):</label>
-            <input type="file" id="customImage" name="customImage" accept="image/png" required>
-        </div>
-
         <div class="cart-summary">
-            <p><strong>Subtotal:</strong> AED <span id="subtotal">500.00</span></p>
+            <p><strong>Subtotal:</strong> AED <span id="subtotal">0.00</span></p>
             <p><strong>Shipping:</strong> AED 15.00</p>
-            <p><strong>Total:</strong> AED <span id="total">515.00</span></p>
+            <p><strong>Total:</strong> AED <span id="total">15.00</span></p>
             <button type="submit" class="btn">Proceed to Checkout</button>
         </div>
     </form>
@@ -205,14 +126,39 @@
 </footer>
 
 <script>
-    const quantityInputs = document.querySelectorAll('.quantity-input');
     const subtotalElement = document.getElementById('subtotal');
     const totalElement = document.getElementById('total');
     const shippingCost = 15;
 
-    quantityInputs.forEach(input => {
-        input.addEventListener('input', updateTotals);
-    });
+    function loadCartItems() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartItemsContainer = document.getElementById('cartItems');
+        cartItemsContainer.innerHTML = '';
+
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = '<tr><td colspan="5">Your cart is empty.</td></tr>';
+        } else {
+            cart.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <img src="${item.image}" alt="${item.name}" class="item-image">
+                        ${item.name}
+                    </td>
+                    <td>
+                        <button type="button" class="quantity-btn" onclick="changeQuantity(this, -1)">-</button>
+                        <input type="number" value="${item.quantity}" min="0" class="quantity-input" data-price="${item.price}" readonly>
+                        <button type="button" class="quantity-btn" onclick="changeQuantity(this, 1)">+</button>
+                    </td>
+                    <td>AED ${item.price.toFixed(2)}</td>
+                    <td class="item-total">AED ${(item.price * item.quantity).toFixed(2)}</td>
+                    <td><a href="#" class="remove-item" onclick="removeItem('${item.name}')">Remove</a></td>
+                `;
+                cartItemsContainer.appendChild(row);
+            });
+        }
+        updateTotals();
+    }
 
     function changeQuantity(button, change) {
         const quantityInput = button.parentElement.querySelector('.quantity-input');
@@ -226,6 +172,7 @@
         quantityInput.value = currentValue;
         updateItemTotal(button);
         updateTotals();
+        updateLocalStorage();
     }
 
     function updateItemTotal(button) {
@@ -248,14 +195,30 @@
         totalElement.innerText = (subtotal + shippingCost).toFixed(2);
     }
 
-    document.querySelectorAll('.remove-item').forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-            const row = this.closest('tr');
-            row.remove();
-            updateTotals();
+    function removeItem(name) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart = cart.filter(item => item.name !== name);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        loadCartItems();
+    }
+
+    function updateLocalStorage() {
+        const updatedCart = [];
+        document.querySelectorAll('.quantity-input').forEach(input => {
+            const name = input.closest('tr').children[0].innerText.split('\n')[1].trim(); // Extract name from the cell
+            const quantity = parseInt(input.value);
+            const price = parseFloat(input.dataset.price);
+            const image = input.closest('tr').children[0].querySelector('img').src; // Get the image URL
+            if (quantity > 0) {
+                updatedCart.push({ name: name, quantity: quantity, price: price, image: image });
+            }
         });
-    });
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
+    }
+
+    // Load cart items when the page loads
+    window.onload = loadCartItems;
 </script>
+
 </body>
 </html>
