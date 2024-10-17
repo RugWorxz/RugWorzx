@@ -171,29 +171,8 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>Handwoven Wool Rug</td>
-                    <td>
-                        <button type="button" class="quantity-btn" onclick="changeQuantity(this, -1)">-</button>
-                        <input type="number" name="quantity1" value="1" min="0" class="quantity-input" data-price="200" readonly>
-                        <button type="button" class="quantity-btn" onclick="changeQuantity(this, 1)">+</button>
-                    </td>
-                    <td>AED 200.00</td>
-                    <td class="item-total">AED 200.00</td>
-                    <td><a href="#" class="remove-item">Remove</a></td>
-                </tr>
-                <tr>
-                    <td>Custom Design Rug</td>
-                    <td>
-                        <button type="button" class="quantity-btn" onclick="changeQuantity(this, -1)">-</button>
-                        <input type="number" name="quantity2" value="2" min="0" class="quantity-input" data-price="150" readonly>
-                        <button type="button" class="quantity-btn" onclick="changeQuantity(this, 1)">+</button>
-                    </td>
-                    <td>AED 150.00</td>
-                    <td class="item-total">AED 300.00</td>
-                    <td><a href="#" class="remove-item">Remove</a></td>
-                </tr>
+            <tbody id="cartBody">
+                <!-- Cart items will be populated here -->
             </tbody>
         </table>
 
@@ -203,9 +182,9 @@
         </div>
 
         <div class="cart-summary">
-            <p><strong>Subtotal:</strong> AED <span id="subtotal">500.00</span></p>
+            <p><strong>Subtotal:</strong> AED <span id="subtotal">0.00</span></p>
             <p><strong>Shipping:</strong> AED 15.00</p>
-            <p><strong>Total:</strong> AED <span id="total">515.00</span></p>
+            <p><strong>Total:</strong> AED <span id="total">15.00</span></p>
             <button type="submit" class="btn">Proceed to Checkout</button>
         </div>
     </form>
@@ -220,61 +199,61 @@
 </footer>
 
 <script>
-    const quantityInputs = document.querySelectorAll('.quantity-input');
-    const subtotalElement = document.getElementById('subtotal');
-    const totalElement = document.getElementById('total');
     const shippingCost = 15;
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-    // Update totals when quantity changes
-    quantityInputs.forEach(input => {
-        input.addEventListener('input', updateTotals);
-    });
+    // Initialize the cart on page load
+    function initCart() {
+        const cartBody = document.getElementById('cartBody');
+        cartBody.innerHTML = ''; // Clear any existing items
+        let subtotal = 0;
 
-    function changeQuantity(button, change) {
-        const quantityInput = button.parentElement.querySelector('.quantity-input');
-        let currentValue = parseInt(quantityInput.value);
-        currentValue += change;
+        cartItems.forEach((item, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.name}</td>
+                <td>
+                    <button type="button" class="quantity-btn" onclick="changeQuantity(${index}, -1)">-</button>
+                    <input type="number" name="quantity${index + 1}" value="${item.quantity}" min="0" class="quantity-input" data-price="${item.price}" readonly>
+                    <button type="button" class="quantity-btn" onclick="changeQuantity(${index}, 1)">+</button>
+                </td>
+                <td>AED ${item.price.toFixed(2)}</td>
+                <td class="item-total">AED ${(item.quantity * item.price).toFixed(2)}</td>
+                <td><a href="#" class="remove-item" onclick="removeItem(${index})">Remove</a></td>
+            `;
+            cartBody.appendChild(row);
+            subtotal += item.quantity * item.price;
+        });
 
-        // Prevent going below 0
-        if (currentValue < 0) {
-            currentValue = 0;
+        document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+        document.getElementById('total').textContent = (subtotal + shippingCost).toFixed(2);
+    }
+
+    function changeQuantity(index, change) {
+        if (change === -1 && cartItems[index].quantity <= 0) return;
+
+        cartItems[index].quantity += change;
+
+        // Remove item if quantity is zero
+        if (cartItems[index].quantity === 0) {
+            cartItems.splice(index, 1);
         }
 
-        quantityInput.value = currentValue;
-        updateItemTotal(button);
-        updateTotals();
+        updateCart();
     }
 
-    function updateItemTotal(button) {
-        const row = button.closest('tr');
-        const quantity = row.querySelector('.quantity-input').value;
-        const price = row.querySelector('.quantity-input').dataset.price;
-        const total = quantity * price;
-        row.querySelector('.item-total').textContent = `AED ${total.toFixed(2)}`;
+    function removeItem(index) {
+        cartItems.splice(index, 1);
+        updateCart();
     }
 
-    function updateTotals() {
-        let subtotal = 0;
-        document.querySelectorAll('.cart-table tbody tr').forEach(row => {
-            const quantity = row.querySelector('.quantity-input').value;
-            const price = row.querySelector('.quantity-input').dataset.price;
-            subtotal += quantity * price;
-        });
-
-        subtotalElement.textContent = subtotal.toFixed(2);
-        const total = subtotal + shippingCost;
-        totalElement.textContent = total.toFixed(2);
+    function updateCart() {
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        initCart();
     }
 
-    // Remove item functionality
-    document.querySelectorAll('.remove-item').forEach(link => {
-        link.addEventListener('click', function (event) {
-            event.preventDefault();
-            const row = this.closest('tr');
-            row.remove();
-            updateTotals();
-        });
-    });
+    // Call initCart to populate the cart on page load
+    initCart();
 </script>
 
 </body>
