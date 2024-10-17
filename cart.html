@@ -21,56 +21,31 @@
             align-items: center;
             border-bottom: 2px solid #00aaff;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: background-color 0.3s ease-in-out;
-        }
-        header:hover {
-            background-color: #e6f7ff;
         }
         .logo h2 {
             color: #00aaff;
             margin: 0;
             font-size: 24px;
             font-weight: bold;
-            letter-spacing: 1px;
-            transition: color 0.3s ease-in-out;
-        }
-        .logo h2:hover {
-            color: #0077cc;
         }
         nav a {
             margin: 0 15px;
             color: #00aaff;
             text-decoration: none;
             font-weight: bold;
-            transition: color 0.3s ease-in-out;
         }
         nav a:hover {
             color: #0077cc;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
         .hero {
             text-align: center;
             padding: 100px 20px;
             background-color: #e6f7ff;
-            color: #333;
-            position: relative;
-            overflow: hidden;
         }
         .hero h1 {
             font-size: 48px;
             margin-bottom: 20px;
             color: #0077cc;
-            transform: translateY(-50px);
-            opacity: 0;
-            animation: fadeInUp 1s forwards;
-        }
-        .hero p {
-            font-size: 20px;
-            margin-bottom: 30px;
-            color: #555;
-            transform: translateY(-30px);
-            opacity: 0;
-            animation: fadeInUp 1s 0.5s forwards;
         }
         .cart-container {
             padding: 60px 20px;
@@ -94,11 +69,18 @@
         .cart-table td {
             background-color: #fff;
         }
+        .cart-table input {
+            width: 60px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
         .cart-table tr:nth-of-type(even) td {
             background-color: #f0f8ff;
         }
         .cart-table a {
-            color: #0077cc;
+            color: #ff3333;
             text-decoration: none;
             font-weight: bold;
         }
@@ -135,97 +117,113 @@
             color: white;
             position: relative;
         }
-        footer p {
-            margin: 0;
-            font-size: 14px;
-        }
         footer a {
             color: white;
             text-decoration: none;
             margin: 0 10px;
-            transition: color 0.3s ease-in-out;
-        }
-        footer a:hover {
-            color: #e6f7ff;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">
-            <h2>Rug Worxz</h2>
-        </div>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="aboutus.html">About Us</a>
-            <a href="shop.html">Shop</a>
-            <a href="customorders.html">Custom Orders</a>
-            <a href="contactus.html">Contact Us</a>
-            <a href="cart.html">Cart</a>
-        </nav>
-    </header>
-
-    <section class="hero">
-        <h1>Your Cart</h1>
-        <p>Review your selections</p>
-    </section>
-
-    <div class="cart-container">
-        <table class="cart-table">
-            <thead>
-                <tr>
-                    <th>Item</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Total</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Example cart items -->
-                <tr>
-                    <td>Handwoven Wool Rug</td>
-                    <td>1</td>
-                    <td>$200.00</td>
-                    <td>$200.00</td>
-                    <td><a href="#">Remove</a></td>
-                </tr>
-                <tr>
-                    <td>Custom Design Rug</td>
-                    <td>2</td>
-                    <td>$150.00</td>
-                    <td>$300.00</td>
-                    <td><a href="#">Remove</a></td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="cart-summary">
-            <p><strong>Subtotal:</strong> $500.00</p>
-            <p><strong>Shipping:</strong> $15.00</p>
-            <p><strong>Total:</strong> $515.00</p>
-            <a href="checkout.html" class="btn">Proceed to Checkout</a>
-        </div>
+<header>
+    <div class="logo">
+        <h2>Rug Worxz</h2>
     </div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="aboutus.html">About Us</a>
+        <a href="shop.html">Shop</a>
+        <a href="customorders.html">Custom Orders</a>
+        <a href="contactus.html">Contact Us</a>
+        <a href="cart.html">Cart</a>
+    </nav>
+</header>
 
-    <footer>
-        <p>&copy; 2024 Rug Worxz</p>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms & Conditions</a>
-        <a href="returns.html">Returns & Exchanges</a>
-        <a href="mailto:rugworxz@gmail.com">Contact Us</a>
-    </footer>
+<section class="hero">
+    <h1>Your Cart</h1>
+    <p>Review your selections</p>
+</section>
+
+<div class="cart-container">
+    <table class="cart-table" id="cartTable">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Handwoven Wool Rug</td>
+                <td><input type="number" value="1" min="1" class="quantity-input" data-price="200"></td>
+                <td>$200.00</td>
+                <td class="item-total">$200.00</td>
+                <td><a href="#" class="remove-item">Remove</a></td>
+            </tr>
+            <tr>
+                <td>Custom Design Rug</td>
+                <td><input type="number" value="2" min="1" class="quantity-input" data-price="150"></td>
+                <td>$150.00</td>
+                <td class="item-total">$300.00</td>
+                <td><a href="#" class="remove-item">Remove</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="cart-summary">
+        <p><strong>Subtotal:</strong> $<span id="subtotal">500.00</span></p>
+        <p><strong>Shipping:</strong> $15.00</p>
+        <p><strong>Total:</strong> $<span id="total">515.00</span></p>
+        <a href="checkout.html" class="btn">Proceed to Checkout</a>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Rug Worxz</p>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms & Conditions</a>
+    <a href="returns.html">Returns & Exchanges</a>
+    <a href="mailto:rugworxz@gmail.com">Contact Us</a>
+</footer>
+
+<script>
+    const quantityInputs = document.querySelectorAll('.quantity-input');
+    const subtotalElement = document.getElementById('subtotal');
+    const totalElement = document.getElementById('total');
+    const shippingCost = 15;
+
+    // Update totals when quantity changes
+    quantityInputs.forEach(input => {
+        input.addEventListener('input', updateTotals);
+    });
+
+    function updateTotals() {
+        let subtotal = 0;
+        document.querySelectorAll('.cart-table tbody tr').forEach(row => {
+            const quantity = row.querySelector('.quantity-input').value;
+            const price = row.querySelector('.quantity-input').dataset.price;
+            const total = quantity * price;
+            row.querySelector('.item-total').textContent = `$${total.toFixed(2)}`;
+            subtotal += total;
+        });
+
+        subtotalElement.textContent = subtotal.toFixed(2);
+        totalElement.textContent = (subtotal + shippingCost).toFixed(2);
+    }
+
+    // Remove item from cart
+    document.querySelectorAll('.remove-item').forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            const row = button.closest('tr');
+            row.remove();
+            updateTotals();
+        });
+    });
+</script>
 
 </body>
 </html>
