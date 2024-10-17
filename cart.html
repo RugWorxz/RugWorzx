@@ -47,7 +47,7 @@
         .cart-container {
             margin: 20px auto;
             width: 80%;
-            background-color: #ffffff; /* White background for cart */
+            background-color: #e0f7fa; /* Light blue background for cart */
             padding: 20px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
@@ -69,13 +69,13 @@
             transition: background-color 0.3s ease;
         }
         .cart-table th {
-            background-color: #e0f7fa; /* Light blue header */
+            background-color: #b2ebf2; /* Lighter blue header */
         }
         .cart-table tr:hover {
             background-color: #f1f1f1; /* Light grey on hover */
         }
         .cart-summary {
-            background-color: #f0f8ff; /* Light blue for summary */
+            background-color: #e0f7fa; /* Light blue for summary */
             padding: 15px;
             border: 1px solid #ccc;
             border-radius: 8px;
@@ -229,21 +229,19 @@
     }
 
     function updateItemTotal(button) {
-        const row = button.closest('tr');
-        const price = parseFloat(row.querySelector('td:nth-child(3)').innerText.replace('AED ', ''));
-        const quantity = parseInt(row.querySelector('.quantity-input').value);
-        const itemTotal = row.querySelector('.item-total');
+        const quantityInput = button.parentElement.querySelector('.quantity-input');
+        const price = parseFloat(quantityInput.dataset.price);
+        const totalCell = button.parentElement.parentElement.querySelector('.item-total');
+        const quantity = parseInt(quantityInput.value);
 
-        itemTotal.innerText = 'AED ' + (price * quantity).toFixed(2);
+        totalCell.innerText = `AED ${(price * quantity).toFixed(2)}`;
     }
 
     function updateTotals() {
         let subtotal = 0;
 
-        quantityInputs.forEach(input => {
-            const price = parseFloat(input.dataset.price);
-            const quantity = parseInt(input.value);
-            subtotal += price * quantity;
+        document.querySelectorAll('.item-total').forEach(totalCell => {
+            subtotal += parseFloat(totalCell.innerText.replace('AED ', ''));
         });
 
         subtotalElement.innerText = subtotal.toFixed(2);
