@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rug Worxz - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -14,110 +15,102 @@
             line-height: 1.6;
         }
         header {
-            background-color: white;
-            padding: 20px;
+            background-color: #ffffff;
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #00aaff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: background-color 0.3s ease-in-out;
-        }
-        header:hover {
-            background-color: #e6f7ff;
+            border-bottom: 3px solid #00aaff;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            transition: background-color 0.3s ease;
         }
         .logo h2 {
             color: #00aaff;
             margin: 0;
-            font-size: 24px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            transition: color 0.3s ease-in-out;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            transition: color 0.3s ease;
         }
         .logo h2:hover {
             color: #0077cc;
         }
         nav a {
-            margin: 0 15px;
+            margin: 0 20px;
             color: #00aaff;
             text-decoration: none;
             font-weight: bold;
-            transition: color 0.3s ease-in-out;
+            font-size: 16px;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
         }
         nav a:hover {
             color: #0077cc;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         .hero {
             text-align: center;
-            padding: 100px 20px;
+            padding: 120px 20px;
             background-color: #e6f7ff;
             color: #333;
             position: relative;
             overflow: hidden;
         }
         .hero h1 {
-            font-size: 52px;
+            font-size: 56px;
             margin-bottom: 20px;
             color: #0077cc;
-            transform: translateY(-50px);
-            opacity: 0;
-            animation: fadeInUp 1s forwards;
+            animation: fadeInDown 1s ease-in-out;
         }
         .hero p {
             font-size: 22px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             color: #555;
-            transform: translateY(-30px);
-            opacity: 0;
-            animation: fadeInUp 1s 0.5s forwards;
+            animation: fadeInDown 1.5s ease-in-out;
         }
         .hero .btn {
             background-color: #00aaff;
             color: white;
-            padding: 15px 30px;
+            padding: 15px 40px;
             text-decoration: none;
-            border-radius: 30px;
-            font-size: 18px;
-            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border-radius: 50px;
+            font-size: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         }
         .hero .btn:hover {
             background-color: #0077cc;
             transform: translateY(-5px);
         }
         .section {
-            padding: 60px 20px;
+            padding: 80px 20px;
             text-align: center;
             background-color: white;
-            color: #333;
-            position: relative;
-            overflow: hidden;
         }
         .section:nth-of-type(even) {
             background-color: #f0f8ff;
         }
         .section h2 {
-            font-size: 36px;
+            font-size: 40px;
             margin-bottom: 30px;
             color: #0077cc;
-            transform: translateY(-30px);
-            opacity: 0;
-            animation: fadeInUp 1s forwards;
+            animation: fadeInUp 1s ease-in-out;
         }
         .section p {
             font-size: 18px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             color: #555;
         }
         .section .btn {
             background-color: #00aaff;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 30px;
             text-decoration: none;
-            border-radius: 30px;
+            border-radius: 50px;
             font-size: 18px;
-            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+            transition: background-color 0.3s ease, transform 0.3s ease;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         .section .btn:hover {
@@ -126,10 +119,11 @@
         }
         footer {
             background-color: #00aaff;
-            padding: 20px;
+            padding: 30px 20px;
             text-align: center;
             color: white;
-            position: relative;
+            margin-top: 40px;
+            box-shadow: 0 -3px 6px rgba(0,0,0,0.1);
         }
         footer p {
             margin: 0;
@@ -138,17 +132,27 @@
         footer a {
             color: white;
             text-decoration: none;
-            margin: 0 10px;
-            transition: color 0.3s ease-in-out;
+            margin: 0 15px;
+            font-size: 14px;
+            transition: color 0.3s ease;
         }
         footer a:hover {
             color: #e6f7ff;
         }
-
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
             }
             to {
                 opacity: 1;
