@@ -12,10 +12,7 @@
             background-color: #f0f8ff;
             color: #333;
             line-height: 1.6;
-            scroll-behavior: smooth;
         }
-
-        /* Add transition for smoother color change and box shadow */
         header {
             background-color: white;
             padding: 20px;
@@ -24,154 +21,132 @@
             align-items: center;
             border-bottom: 2px solid #00aaff;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: background-color 0.3s ease-in-out;
         }
-
-        header:hover {
-            background-color: #e6f7ff;
-        }
-
         .logo h2 {
             color: #00aaff;
             margin: 0;
             font-size: 24px;
             font-weight: bold;
             letter-spacing: 1px;
-            transition: color 0.3s ease-in-out;
         }
-
-        .logo h2:hover {
-            color: #0077cc;
-        }
-
         nav a {
             margin: 0 15px;
             color: #00aaff;
             text-decoration: none;
             font-weight: bold;
-            transition: color 0.3s ease-in-out;
         }
-
-        nav a:hover {
-            color: #0077cc;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
-        }
-
         .hero {
             text-align: center;
             padding: 100px 20px;
-            background: linear-gradient(135deg, #00aaff, #0077cc);
-            color: white;
-            position: relative;
-            overflow: hidden;
+            background-color: #e6f7ff;
         }
-
         .hero h1 {
             font-size: 48px;
-            margin-bottom: 20px;
-            color: white;
-            transform: translateY(-50px);
-            opacity: 0;
-            animation: fadeInUp 1s forwards;
+            color: #0077cc;
         }
-
         .hero p {
             font-size: 20px;
-            margin-bottom: 30px;
-            color: white;
-            transform: translateY(-30px);
-            opacity: 0;
-            animation: fadeInUp 1s 0.5s forwards;
+            color: #555;
         }
-
-        /* Enhance product item with smooth hover effect */
+        .section {
+            padding: 60px 20px;
+            text-align: center;
+            background-color: white;
+        }
+        .section h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #0077cc;
+        }
+        .section p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #555;
+        }
         .product-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
         }
-
         .product-item {
             background-color: white;
             border: 1px solid #ddd;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            overflow: hidden;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
             width: 250px;
             text-align: center;
-            position: relative;
-            z-index: 0;
+            padding: 15px;
         }
-
+        .product-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
         .product-item img {
             width: 100%;
             height: auto;
-            transition: transform 0.5s ease;
+            border-bottom: 2px solid #00aaff;
+            margin-bottom: 15px;
         }
-
-        .product-item:hover img {
-            transform: scale(1.1);
-        }
-
         .product-item h3 {
             font-size: 20px;
             color: #0077cc;
             margin: 10px 0;
         }
-
         .product-item p {
             font-size: 16px;
-            color: #555;
-            margin: 0 10px 10px;
+            color: #777;
+            margin: 10px 0;
         }
-
-        /* Smoother hover effect with box-shadow and scale */
-        .product-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        .product-item .price {
+            font-size: 18px;
+            color: #00aaff;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
-
+        .btn {
+            background-color: #00aaff;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 18px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .btn:hover {
+            background-color: #0077cc;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
         footer {
             background-color: #00aaff;
-            padding: 20px;
-            text-align: center;
+            padding: 30px;
             color: white;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            text-align: center;
         }
-
-        footer p {
-            margin: 0;
+        footer p, footer a {
+            margin: 5px 0;
             font-size: 14px;
-        }
-
-        footer a {
             color: white;
             text-decoration: none;
-            margin: 0 10px;
-            transition: color 0.3s ease-in-out;
+            transition: color 0.3s ease;
         }
-
         footer a:hover {
             color: #e6f7ff;
         }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        footer .footer-col {
+            flex: 1;
+            min-width: 150px;
+            padding: 10px;
         }
-
-        /* Added smooth scroll effect */
-        html {
-            scroll-behavior: smooth;
+        footer .footer-col p {
+            margin: 5px 0;
         }
-
     </style>
 </head>
 <body>
@@ -203,26 +178,34 @@
             <div class="product-item">
                 <img src="path/to/rug1.jpg" alt="Rug 1">
                 <h3>Classic Persian Rug</h3>
-                <p>$299.99</p>
+                <p class="price">$299.99</p>
+                <a href="#" class="btn">View Details</a>
             </div>
             <div class="product-item">
                 <img src="path/to/rug2.jpg" alt="Rug 2">
                 <h3>Modern Geometric Rug</h3>
-                <p>$179.99</p>
+                <p class="price">$179.99</p>
+                <a href="#" class="btn">View Details</a>
             </div>
             <div class="product-item">
                 <img src="path/to/rug3.jpg" alt="Rug 3">
                 <h3>Cozy Wool Rug</h3>
-                <p>$249.99</p>
+                <p class="price">$249.99</p>
+                <a href="#" class="btn">View Details</a>
             </div>
+            <!-- Add more products as needed -->
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2024 Rug Worxz</p>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms & Conditions</a>
-        <a href="returns.html">Returns & Exchanges</a>
+        <div class="footer-col">
+            <p>&copy; 2024 Rug Worxz</p>
+        </div>
+        <div class="footer-col">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms & Conditions</a>
+            <a href="returns.html">Returns & Exchanges</a>
+        </div>
     </footer>
 
 </body>
