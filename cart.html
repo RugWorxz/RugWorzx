@@ -231,7 +231,7 @@
             <p><strong>Subtotal:</strong> AED <span id="subtotal">0.00</span></p>
             <p><strong>Shipping:</strong> AED 15.00</p>
             <p><strong>Total:</strong> AED <span id="total">15.00</span></p>
-            <button type="submit" class="btn">Proceed to Checkout</button>
+            <button type="submit" class="btn" id="checkoutBtn">Proceed to Checkout</button>
         </div>
     </form>
 </div>
@@ -296,18 +296,18 @@
 
     function updateItemTotal(button) {
         const quantityInput = button.parentElement.querySelector('.quantity-input');
-        const price = parseFloat(quantityInput.dataset.price);
-        const totalCell = button.parentElement.parentElement.querySelector('.item-total');
-        const quantity = parseInt(quantityInput.value);
-
-        totalCell.innerText = `AED ${(price * quantity).toFixed(2)}`;
+        const itemTotalElement = button.parentElement.parentElement.querySelector('.item-total');
+        const price = parseFloat(quantityInput.getAttribute('data-price'));
+        const total = price * parseInt(quantityInput.value);
+        itemTotalElement.innerText = `AED ${total.toFixed(2)}`;
     }
 
     function updateTotals() {
+        const itemTotals = document.querySelectorAll('.item-total');
         let subtotal = 0;
 
-        document.querySelectorAll('.item-total').forEach(totalCell => {
-            subtotal += parseFloat(totalCell.innerText.replace('AED ', ''));
+        itemTotals.forEach(itemTotal => {
+            subtotal += parseFloat(itemTotal.innerText.replace('AED ', ''));
         });
 
         subtotalElement.innerText = subtotal.toFixed(2);
@@ -315,30 +315,42 @@
     }
 
     function removeItem(name) {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        cart = cart.filter(item => item.name !== name);
-        localStorage.setItem('cart', JSON.stringify(cart));
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const updatedCart = cart.filter(item => item.name !== name);
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
         loadCartItems();
     }
 
     function updateLocalStorage() {
-        const updatedCart = [];
-        document.querySelectorAll('.quantity-input').forEach(input => {
-            const name = input.closest('tr').querySelector('.item-name').innerText;
-            const quantity = parseInt(input.value);
-            const price = parseFloat(input.dataset.price);
-            const image = input.closest('tr').querySelector('img').src; // Get the image URL
-            if (quantity > 0) {
-                updatedCart.push({ name: name, quantity: quantity, price: price, image: image });
-            }
+        const cart = [];
+        const rows = document.querySelectorAll('#cartItems tr');
+        rows.forEach(row => {
+            const itemName = row.querySelector('.item-name').innerText;
+            const itemQuantity = parseInt(row.querySelector('.quantity-input').value);
+            const itemPrice = parseFloat(row.querySelector('.quantity-input').getAttribute('data-price'));
+            const itemImage = row.querySelector('.item-image').src;
+
+            cart.push({
+                name: itemName,
+                quantity: itemQuantity,
+                price: itemPrice,
+                image: itemImage
+            });
         });
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
+        localStorage.setItem('cart', JSON.stringify(cart));
     }
 
-    // Load cart items when the page loads
     window.onload = loadCartItems;
+
+    // Form submission and redirection
+    const orderForm = document.getElementById('orderForm');
+    orderForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        
+        // Redirect the user to the checkout page after form submission
+        window.location.href = 'checkoutpage.html';
+    });
 </script>
 
 </body>
-
 </html>
