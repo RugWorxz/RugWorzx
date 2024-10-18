@@ -1,239 +1,108 @@
-<?php
-session_start();
-
-// Check if the cart is empty
-if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
-    header('Location: cart.php'); // Redirect to cart if empty
-    exit;
-}
-
-// Calculate subtotal and shipping cost
-$subtotal = 0;
-$shippingCost = 15.00;
-$cartItems = $_SESSION['cart'];
-
-foreach ($cartItems as $item) {
-    $subtotal += $item['price'] * $item['quantity'];
-}
-
-$total = $subtotal + $shippingCost;
-
-// Process the order on form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $fullName = $_POST['fullName'];
-    $address = $_POST['address'];
-    $city = $_POST['city'];
-    $postalCode = $_POST['postalCode'];
-
-    // Here you would typically save the order details to a database or send an email
-
-    // Clear the cart after checkout
-    unset($_SESSION['cart']);
-    echo "<script>alert('Thank you for your order, $fullName! Your order has been processed.'); window.location.href = 'index.php';</script>";
-    exit;
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rug Worxz - Checkout</title>
-    <style>
-        /* CSS styles (same as before) */
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f8ff;
-            color: #333;
-            line-height: 1.6;
-        }
-        header {
-            background-color: white;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #00aaff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .logo h2 {
-            color: #00aaff;
-            margin: 0;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        nav a {
-            margin: 0 15px;
-            color: #00aaff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        nav a:hover {
-            color: #0077cc;
-        }
-        .hero {
-            text-align: center;
-            padding: 100px 20px;
-            background-color: #e6f7ff;
-        }
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #0077cc;
-        }
-        .checkout-container {
-            padding: 60px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .checkout-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 30px;
-        }
-        .checkout-table th, .checkout-table td {
-            padding: 15px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-        .checkout-table th {
-            background-color: #00aaff;
-            color: white;
-        }
-        .checkout-table td {
-            background-color: #fff;
-        }
-        .checkout-summary {
-            text-align: right;
-            padding: 20px;
-            background-color: white;
-            border-top: 2px solid #00aaff;
-        }
-        .checkout-summary p {
-            font-size: 18px;
-            margin: 0 0 10px;
-            color: #555;
-        }
-        .checkout-summary .btn {
-            background-color: #00aaff;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 30px;
-            font-size: 18px;
-            transition: background-color 0.3s ease-in-out;
-            border: none;
-        }
-        .checkout-summary .btn:hover {
-            background-color: #0077cc;
-        }
-        .shipping-info {
-            margin-top: 20px;
-        }
-        .shipping-info label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        .shipping-info input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-        footer {
-            background-color: #00aaff;
-            padding: 20px;
-            text-align: center;
-            color: white;
-            position: relative;
-        }
-        footer a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-    </style>
+    <title>Checkout</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.stripe.com/v3/"></script> <!-- Load Stripe.js -->
 </head>
 <body>
 
-<header>
-    <div class="logo">
-        <h2>Rug Worxz</h2>
-    </div>
-    <nav>
-        <a href="index.php">Home</a>
-        <a href="aboutus.php">About Us</a>
-        <a href="shop.php">Shop</a>
-        <a href="customorders.php">Custom Orders</a>
-        <a href="contactus.php">Contact Us</a>
-        <a href="cart.php">Cart</a>
-    </nav>
-</header>
-
-<section class="hero">
-    <h1>Checkout</h1>
-    <p>Please review your order and enter your shipping information.</p>
-</section>
-
-<div class="checkout-container">
-    <table class="checkout-table">
-        <thead>
-            <tr>
-                <th>Item</th>
-                <th>Quantity</th>
-                <th>Price (AED)</th>
-                <th>Total (AED)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($cartItems as $item): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($item['name']); ?></td>
-                <td><?php echo htmlspecialchars($item['quantity']); ?></td>
-                <td>AED <?php echo number_format($item['price'], 2); ?></td>
-                <td>AED <?php echo number_format($item['price'] * $item['quantity'], 2); ?></td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-
-    <div class="shipping-info">
-        <h3>Shipping Information</h3>
-        <form method="POST" action="">
-            <label for="fullName">Full Name:</label>
-            <input type="text" id="fullName" name="fullName" required>
-
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address" required>
-
-            <label for="city">City:</label>
-            <input type="text" id="city" name="city" required>
-
-            <label for="postalCode">Postal Code:</label>
-            <input type="text" id="postalCode" name="postalCode" required>
-            <button type="submit" class="btn">Complete Order</button>
-        </form>
-    </div>
-
-    <div class="checkout-summary">
-        <p><strong>Subtotal:</strong> AED <?php echo number_format($subtotal, 2); ?></p>
-        <p><strong>Shipping:</strong> AED <?php echo number_format($shippingCost, 2); ?></p>
-        <p><strong>Total:</strong> AED <?php echo number_format($total, 2); ?></p>
-    </div>
+<div class="nav">
+    <div class="nav-item"><a href="#">Store</a></div>
+    <div class="nav-item active" aria-current="page">Checkout</div>
 </div>
 
-<footer>
-    <p>&copy; 2024 Rug Worxz</p>
-    <a href="privacy.php">Privacy Policy</a>
-    <a href="terms.php">Terms & Conditions</a>
-    <a href="returns.php">Returns & Exchanges</a>
-    <a href="mailto:rugworxz@gmail.com">Contact Us</a>
-</footer>
+<div class="container">
+    <h1>
+        <span>Checkout</span>
+        <span>$9.99</span>
+    </h1>
+    <form id="payment-form">
+        <div class="input input-text half-width">
+            <span class="input-label">First Name</span>
+            <input class="input-field" type="text" placeholder="John" name="fname" autofocus required>
+        </div>
+        <div class="input input-text half-width">
+            <span class="input-label">Last Name</span>
+            <input class="input-field" type="text" placeholder="Smith" name="lname" required>
+        </div>
+        <div class="input input-text full-width">
+            <span class="input-label">Email Address</span>
+            <input class="input-field" type="email" placeholder="someone@example.com" name="email" required>
+        </div>
+
+        <!-- Stripe Elements placeholder -->
+        <div id="card-element">
+            <!-- A Stripe Element will be inserted here. -->
+        </div>
+        
+        <!-- Display form errors -->
+        <div id="card-errors" role="alert"></div>
+
+        <button id="submit-button" class="btn">Pay $9.99</button>
+    </form>
+</div>
+
+<script>
+    // Stripe API public key
+    const stripe = Stripe('your-publishable-key-here'); 
+    const elements = stripe.elements();
+
+    // Create an instance of the card Element.
+    const card = elements.create('card');
+    
+    // Add the card Element to the `#card-element` div.
+    card.mount('#card-element');
+
+    // Handle real-time validation errors from the card Element.
+    card.on('change', function(event) {
+        const displayError = document.getElementById('card-errors');
+        if (event.error) {
+            displayError.textContent = event.error.message;
+        } else {
+            displayError.textContent = '';
+        }
+    });
+
+    // Handle form submission.
+    const form = document.getElementById('payment-form');
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const { paymentMethod, error } = await stripe.createPaymentMethod({
+            type: 'card',
+            card: card,
+            billing_details: {
+                name: form.fname.value + ' ' + form.lname.value,
+                email: form.email.value
+            }
+        });
+
+        if (error) {
+            // Display error.message in the card-errors div.
+            document.getElementById('card-errors').textContent = error.message;
+        } else {
+            // Submit the paymentMethod.id to your server.
+            const paymentMethodId = paymentMethod.id;
+            // Call your server-side code to process the payment.
+            fetch('receipt.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ payment_method_id: paymentMethodId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Payment successful!');
+                } else {
+                    alert('Payment failed: ' + data.message);
+                }
+            });
+        }
+    });
+</script>
 
 </body>
 </html>
