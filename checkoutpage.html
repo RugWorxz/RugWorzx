@@ -161,7 +161,8 @@
             <span>$9.99</span>
         </h1>
 
-        <form action="/process_payment" method="POST" id="payment-form">
+        <!-- Payment Form (action removed, handled via JavaScript) -->
+        <form id="payment-form">
 
             <div class="row">
 
@@ -256,6 +257,7 @@
             const expYear = formData.get('exp_year');
             const cvv = formData.get('cvv');
             
+            // Call the backend to create a payment intent
             const paymentIntentResponse = await fetch('/create_payment_intent', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -267,6 +269,7 @@
 
             const { client_secret } = await paymentIntentResponse.json();
 
+            // Confirm the card payment using Stripe
             const paymentResult = await stripe.confirmCardPayment(client_secret, {
                 payment_method: {
                     card: {
